@@ -1,7 +1,10 @@
+from time import sleep
 from django.db.models import Q
 from .models import Employee
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.forms.models import model_to_dict
+from .tasks import send_mail
 
 
 class Add(APIView):
@@ -29,17 +32,7 @@ class ListAll(APIView):
 class ListSearch(APIView):
     def get(self, request, id):
         employee = Employee.objects.get(eid=id)
-        return Response(
-            {
-                "id": employee.eid,
-                "name": employee.ename,
-                "college_name": employee.cname,
-                "age": employee.age,
-                "passout": employee.passout,
-                "address": employee.addr,
-                "contact": employee.econtact,
-            }
-        )
+        return Response(model_to_dict(employee))
 
 
 class Update(APIView):
@@ -54,3 +47,10 @@ class Delete(APIView):
     def post(self, request, id):
         Employee.objects.get(eid=id).delete()
         return Response({"status": "OK"})
+
+
+class SendMail(APIView):
+    def get(self, request):
+        send_mail.delay()
+        # sleep(20)
+        return Response({'status': 'ok'})
