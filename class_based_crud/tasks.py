@@ -6,3 +6,8 @@ from rest_framework.response import Response
 @shared_task()
 def send_mail():
     sleep(20)
+
+
+@shared_task()
+def send_video():
+    sleep(20)

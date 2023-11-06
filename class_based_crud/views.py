@@ -4,7 +4,7 @@ from .models import Employee
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.forms.models import model_to_dict
-from .tasks import send_mail
+from .tasks import send_mail, send_video
 
 
 class Add(APIView):
@@ -51,6 +51,14 @@ class Delete(APIView):
 
 class SendMail(APIView):
     def get(self, request):
-        send_mail.delay()
+        send_mail.apply_async(queue='send-mail-queue', routing_key='send-mail')
+        # sleep(20)
+        return Response({'status': 'ok'})
+
+
+class SendVideo(APIView):
+    def get(self, request):
+        send_video.apply_async(queue='send-video-queue',
+                               routing_key='send-video')
         # sleep(20)
         return Response({'status': 'ok'})
