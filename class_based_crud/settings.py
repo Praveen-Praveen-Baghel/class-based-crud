@@ -27,6 +27,16 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+KAFKA_CONFIG = {
+    'bootstrap.servers': '10.20.0.12:9092',
+}
+
+KAFKA_CONSUMER_CONFIG = {
+    'bootstrap.servers': '10.20.0.12:9092', 
+    'group.id': 'salazar_group',
+    'auto.offset.reset': 'earliest', 
+}
+
 
 # Application definition
 

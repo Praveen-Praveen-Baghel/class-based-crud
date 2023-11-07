@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .views import ListAll, Add, ListSearch, Update, SendMail, SendVideo
+from .views import ListAll, Add, ListSearch, Update, SendMail, SendVideo, SendMesage, ReceiveMessage
 
 urlpatterns = [
     path("list-all/", ListAll.as_view()),
@@ -24,5 +24,7 @@ urlpatterns = [
     path("delete/<int:id>", ListAll.as_view()),
     path("update/<int:id>", Update.as_view()),
     path("send-mail/", SendMail.as_view()),
-    path('send-video/', SendVideo.as_view())
+    path('send-video/', SendVideo.as_view()),
+    path('send-message/', SendMesage.as_view()),
+    path('receive-message/', ReceiveMessage.as_view())
 ]
