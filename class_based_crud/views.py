@@ -95,9 +95,5 @@ class ReceiveMessage(APIView):
                     break
 
             print('Received message: ', str(msg.value()))
-
+            
         consumer.close()
-
-
-
-
